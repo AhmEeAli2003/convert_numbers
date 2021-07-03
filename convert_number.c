@@ -6,9 +6,9 @@ int systemNumber[10],i,sum,temp;
 void decimalToBinary(int number);
 void decimalToOctal(int number);
 void decimalToHexaDecimal(int number);
-void binaryToDecimal(int number);
-void octalToDecimal(int number);
-void HexaToDecimal();
+int binaryToDecimal(int number);
+int octalToDecimal(int number);
+int HexaToDecimal();
 void choose(int op,int number);
 void binaryToOctal(int number);
 void octalToBinary(int number);
@@ -16,9 +16,6 @@ void binaryToHexa(int number);
 void HexaToBinary();
 void octalToHexa(int number);
 void HexaToOctal();
-int binaryToDecWithoutPrint(int number);
-int HexaToDecWithoutPrint();
-int OctalToDecWithoutPrint(int number);
 void main(void)
 {
     system("color 1e");
@@ -29,7 +26,7 @@ void main(void)
     printf(" 10-Hexadecimal to binary\n 11-octal to Hexadecimal\n 12-Hexadecimal to octal\n");
     printf("Choose number >> ");
     scanf("%d",&op);
-    if (op==6) HexaToDecimal();
+    if (op==6) printf("%d",HexaToDecimal());
     else if (op==10) HexaToBinary();
     else if (op==12) HexaToOctal();
     else
@@ -44,8 +41,8 @@ void choose(int op,int number)
     if (op==1) decimalToBinary(number);
     else if (op==2) decimalToOctal(number);
     else if (op==3) decimalToHexaDecimal(number);
-    else if (op==4) binaryToDecimal(number);
-    else if (op==5) octalToDecimal(number);
+    else if (op==4) printf("%d",binaryToDecimal(number));
+    else if (op==5) printf("%d",octalToDecimal(number));
     else if (op==7) binaryToOctal(number);
     else if (op==8) octalToBinary(number);
     else if (op==9) binaryToHexa(number);
@@ -90,7 +87,7 @@ void decimalToHexaDecimal(int number)
         printf("%c",Hexanumber[i]);
     }
 }
-void binaryToDecimal(int number)
+int binaryToDecimal(int number)
 {
     for(i=0;number>0;i++)
     {
@@ -98,9 +95,9 @@ void binaryToDecimal(int number)
         sum+=temp;
         number /=10;
     }
-    printf("%d",sum);
+    return sum;
 }
-void octalToDecimal(int number)
+int octalToDecimal(int number)
 {
     for(i=0;number>0;i++)
     {
@@ -108,11 +105,12 @@ void octalToDecimal(int number)
        sum+=temp;
        number /=10;
     }
-    printf("%d",sum);
+    return sum;
 }
-void HexaToDecimal()
+int HexaToDecimal()
 {
     char Hexanumber[17];
+    printf("character should be Uppercase\n");
     printf("Input number: ");
     scanf("%s",&Hexanumber);
     int base=1;
@@ -129,78 +127,36 @@ void HexaToDecimal()
             sum+=(Hexanumber[i] - 55)*base;
             base*= 16;
         }
-    }
-    printf("%d",sum);
-}
-int binaryToDecWithoutPrint(int number)
-{
-    for(i=0;number>0;i++)
-    {
-        temp=(number%10)*pow(2,i);
-        sum+=temp;
-        number /=10;
-    }
-    return sum;
-}
-int HexaToDecWithoutPrint()
-{
-     char Hexanumber[17];
-    printf("Input number: ");
-    scanf("%s",&Hexanumber);
-    int base=1;
-    int len=strlen(Hexanumber);
-    for (i=len-1;i>=0;i--)
-    {
-        if (Hexanumber[i] >= '0' && Hexanumber[i]<= '9')
-        {
-            sum +=(Hexanumber[i] - 48)*base;
-            base*=16;
-        }
-        else if (Hexanumber[i] >= 'A' && Hexanumber[i] <= 'F')
-        {
-            sum+=(Hexanumber[i] - 55)*base;
-            base*= 16;
-        }
-    }
-    return sum;
-}
-int OctalToDecWithoutPrint(int number)
-{
-     for(i=0;number>0;i++)
-    {
-       temp=(number%10)*pow(8,i);
-       sum+=temp;
-       number /=10;
     }
     return sum;
 }
 void binaryToOctal(int number)
 {
-    binaryToDecWithoutPrint(number);
+    binaryToDecimal(number);
     decimalToOctal(sum);
 }
 void octalToBinary(int number)
 {
-    OctalToDecWithoutPrint(number);
+    octalToDecimal(number);
     decimalToBinary(sum);
 }
 void binaryToHexa(int number)
 {
-    binaryToDecWithoutPrint(number);
+    binaryToDecimal(number);
     decimalToHexaDecimal(sum);
 }
 void HexaToBinary()
 {
-    HexaToDecWithoutPrint();
+    HexaToDecimal();
     decimalToBinary(sum);
 }
 void octalToHexa(int number)
 {
-    OctalToDecWithoutPrint(number);
+    octalToDecimal(number);
     decimalToHexaDecimal(sum);
 }
 void HexaToOctal()
 {
-    HexaToDecWithoutPrint();
+    HexaToDecimal();
     decimalToOctal(sum);
 }
